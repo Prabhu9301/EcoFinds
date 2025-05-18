@@ -31,7 +31,7 @@ class Product(db.Model):
     description = db.Column(db.String, nullable=False)
     category = db.Column(db.String, nullable=False)
     price = db.Column(db.Float, nullable=False)
-    # image = db.Column(db.String, nullable=False)
+    image = db.Column(db.BLOB, nullable=False)
 
     carts = db.relationship('Cart', backref='product', lazy=True)
     orders = db.relationship('Order', backref='product', lazy=True)
@@ -63,10 +63,5 @@ class Order(db.Model):
 
 
 with app.app_context():
-        db.create_all()
-        # Add Admin into the DB
-        if not User.query.filter_by(username = 'admin').first():
-            admin_user = User(username = 'admin', password = 'admin', usertype = 'admin')
-            db.session.add(admin_user)
-        
+        db.create_all()        
         db.session.commit()
